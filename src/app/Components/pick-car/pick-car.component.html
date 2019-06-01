@@ -1,0 +1,65 @@
+
+<div class="wrapper-page">
+    <mat-expansion-panel  expanded >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+              Let us help you find your perfect car
+            <mat-icon>directions_car</mat-icon>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <!-- <mat-form-field >
+          <mat-select  placeholder="Pick up" [(ngModel)]="pickUpLocation">
+            <mat-option  *ngFor="let branch of branches" [value]="branch">
+              {{branch.City}}
+            </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field >
+          <mat-select  placeholder="Return" [(ngModel)]="returnLocation">
+            <mat-option  *ngFor="let branch of branches" [value]="branch">
+              {{branch.City}}
+            </mat-option>
+            </mat-select>
+        </mat-form-field> -->
+    <mat-form-field >
+      <mat-select  placeholder="Gear" (selectionChange)="updateGear($event.value)">
+        <mat-option  *ngFor="let gear of gears" [value]="gear">
+          {{gear}}
+        </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field >
+      <mat-select placeholder="Year" (selectionChange)="updateManufacturerByYearAndGear($event.value)">
+        <mat-option *ngFor="let year of years" [value]="year">
+          {{year}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+        <mat-form-field >
+            <mat-select placeholder="Manufacturer" (selectionChange)="getModelByManufacturer($event.value)">
+              <mat-option *ngFor="let manufacturer of manufacturers" [value]="manufacturer">
+                {{manufacturer}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+              <mat-select  placeholder="Model" (selectionChange)="updateModel($event.value)" >
+                <mat-option *ngFor="let model of models"  [value]="model">
+                  {{model}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput
+                  placeholder="Choose a date Range"
+                  [satDatepicker]="picker"
+                  [min]="currentDate"
+                  (dateChange)="calculateDaysDiff($event.value)">
+              <sat-datepicker  #picker [rangeMode]="true"></sat-datepicker>
+              <sat-datepicker-toggle matSuffix  [for]="picker"></sat-datepicker-toggle>
+            </mat-form-field>
+            <button  mat-raised-button (click)="updateFilterStatus()" color="primary" [innerText]="filter  ? 'Show All' : 'Filter'"></button>
+          </mat-expansion-panel>
+  <!-- -->
+    <app-car-card [carsInput]="allCars"  [daysRange]="daysRange" [filter]="filter"  [gear]="gear" [manufacturer]="manufacturer" [model]="model" [year]="year" [rentPeriod]="rentPeriod" ></app-car-card>
+    </div>
