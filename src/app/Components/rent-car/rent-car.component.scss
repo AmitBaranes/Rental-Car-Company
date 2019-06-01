@@ -1,0 +1,39 @@
+
+.mat-card{
+    margin-top: 1em;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    // width: 20%;
+    // display: inline-block;
+    text-align: center;
+}
+
+
+
+.car-image{
+    height: 200px;
+    object-fit: contain;
+}
+
+
+.image-text-wrapper{
+    display:inline-block;
+    align-self: center;
+    vertical-align: middle;
+}
+.gear-text{
+    display:inline-block;
+    vertical-align: middle;
+    padding-left: 0.5em;
+}
+
+.material-icons{
+    display: inline-flex;
+    vertical-align: top;
+}
+.wrapper-page{
+    width: 80% !important;
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+  }

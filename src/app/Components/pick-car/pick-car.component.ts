@@ -16,6 +16,7 @@ interface IRentPeriod {
 export class PickCarComponent implements OnInit {
   constructor(private carsApi: CarsService, private branchesApi: BranchesService) { }
   allCars: any;
+  allCarsType: any;
   gears: string[] = ['Automatic', 'Manually'];
   manufacturers: string[];
   models: string[];
@@ -39,7 +40,7 @@ export class PickCarComponent implements OnInit {
 }
   getModelByManufacturer(manufacturer: string): void {
     this.manufacturer = manufacturer;
-    this.models = this.allCars
+    this.models = this.allCarsType
     .filter(car => car.Gear === this.gear && car.Year === this.year && car.Manufacturer === this.manufacturer)
     .map(({Model}) => Model);
   }
@@ -50,7 +51,7 @@ export class PickCarComponent implements OnInit {
 
   updateManufacturerByYearAndGear(year: string) {
     this.year = year;
-    this.manufacturers = Array.from(new Set(this.allCars.filter
+    this.manufacturers = Array.from(new Set(this.allCarsType.filter
     (car => car.Gear === this.gear && car.Year === this.year)
     .map(({Manufacturer})  => Manufacturer)));
   }
@@ -61,12 +62,15 @@ updateFilterStatus() {
 
   updateGear(gear: string) {
     this.gear = gear[0];
-    this.years =  Array.from(new Set(this.allCars.filter(car => car.Gear === this.gear).map(({Year})  => Year)));
+    this.years =  Array.from(new Set(this.allCarsType.filter(car => car.Gear === this.gear).map(({Year})  => Year)));
   }
 
 
   async ngOnInit() {
-    this.allCars = await this.carsApi.getAllCarsType();
+    // this.allCars = await this.carsApi.getAllCarsType();
+    this.allCars  = await this.carsApi.getAllCars();
+    this.allCarsType =  this.allCars.filter(s => s.Available === 'Y' && s.Proper === 'Y' ).map(car => car.CarType);
+    // debugger;
   }
 
 }

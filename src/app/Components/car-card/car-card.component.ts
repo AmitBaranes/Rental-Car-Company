@@ -27,11 +27,8 @@ defaultElevation = 2;
 
 
 rentCar(car: any, rentPeriod: IRentPeriod) {
-const navigationExtras: NavigationExtras = {... car};
-console.log(car);
-console.log(rentPeriod);
+const navigationExtras: NavigationExtras = {... car, rentPeriod};
 this.router.navigate(['Cars/Payment'], navigationExtras);
-
 }
 
 }

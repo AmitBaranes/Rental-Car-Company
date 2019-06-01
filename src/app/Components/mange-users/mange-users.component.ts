@@ -28,7 +28,7 @@ interface IUser {
 })
 export class MangeUsersComponent implements OnInit {
   constructor(private userApi: UsersService, private dialog: MatDialog) { }
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   allUsers: any;
   isEdit: boolean;
   genders: string[] = ['Male', 'Female', 'Other'];

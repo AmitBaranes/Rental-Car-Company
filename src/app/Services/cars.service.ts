@@ -32,4 +32,19 @@ export class CarsService {
     const cars =  await this.http.get<any>(`${serverURL}/getAllCars`).toPromise();
     return cars;
   }
+
+public async updateCar(car: any) {
+const updateCarResponse = await this.http.put<any>(`${serverURL}/updateCar`, car).toPromise().then(res => res.Message);
+return updateCarResponse ;
+}
+
+
+public async updateRentCar(car: any) {
+
+  //TODO ! 
+  const updateCarResponse = await this.http.put<any>(`${serverURL}/updateRentCar`, car).toPromise().then(res => res.Message);
+  return updateCarResponse ;
+  //TODO !
+  }
+
 }
