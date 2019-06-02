@@ -39,12 +39,9 @@ return updateCarResponse ;
 }
 
 
-public async updateRentCar(car: any) {
-
-  //TODO ! 
-  const updateCarResponse = await this.http.put<any>(`${serverURL}/updateRentCar`, car).toPromise().then(res => res.Message);
-  return updateCarResponse ;
-  //TODO !
+public async addRentCar(rentCar: any) {
+  const rentCarResponse = await this.http.post<any>(`${serverURL}/addRent`, rentCar).toPromise().then(res => res.Message);
+  return rentCarResponse ;
   }
 
 }

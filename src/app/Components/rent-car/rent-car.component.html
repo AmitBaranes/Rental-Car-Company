@@ -1,6 +1,4 @@
 <div class="wrapper-page">
-
-
 <h3>REVIEW & RESERVE</h3>
 <mat-card >
     <mat-card-header>
@@ -11,19 +9,19 @@
         <h1>Rental Details</h1>
         <h3>Vehicle</h3>
         <p>{{carInforamtion.Manufacturer}} {{carInforamtion.Model}} {{carInforamtion.Year}}</p>
-        <p>Mileage:{{relevantCar.Mileage | number: '2.'}}</p> 
-        <p>Car Number:{{relevantCar.CarNumber}}</p> 
+        <p>Mileage : {{relevantCar.Mileage | number: '2.'}}</p> 
+        <p>Car Number : {{relevantCar.CarNumber | CarNumber}}</p> 
         <div class="image-text-wrapper">
             <img src="./assets/gearshift.png" style="height:26px;">
           </div>
           <div class="gear-text" [innerHTML]="carInforamtion.Gear === 'A' ? 'Automatic' : 'Manually' " >
           </div>
         <h3>Dates & Times</h3>
-        <p>Pick-Up Time: {{carInforamtion.rentPeriod.begin | date:'mediumDate'}} </p>
-        <p >Return Time: {{carInforamtion.rentPeriod.end | date:'mediumDate'}} </p>
+        <p>Pick-Up Time : {{carInforamtion.rentPeriod.begin | date:'mediumDate'}} </p>
+        <p >Return Time : {{carInforamtion.rentPeriod.end | date:'mediumDate'}} </p>
         <h3>Pick-Up/Return Location</h3>
-        <p> Pick-Up Location: {{branchInfo.City}},{{branchInfo.Address}}</p>
-        <p>Return Location: {{branchInfo.City}},{{branchInfo.Address}}</p>
+        <p> Pick-Up Location : {{branchInfo.City}},{{branchInfo.Address}}</p>
+        <p>Return Location : {{branchInfo.City}},{{branchInfo.Address}}</p>
         <!-- <button mat-icon-button color="primary" (click)="editBranchReturn()" >
             <mat-icon  matSuffix >edit</mat-icon>
             </button> -->

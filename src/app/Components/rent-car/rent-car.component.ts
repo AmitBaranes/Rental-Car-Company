@@ -4,6 +4,15 @@ import { CarsService } from 'src/app/Services/cars.service';
 import { BranchesService } from 'src/app/Services/branches.service';
 import sweetalert2 from 'sweetalert2';
 
+export class RentCar {
+  CarNumber: string;
+  UserID: number;
+  StartTime: Date;
+  EndTime: Date;
+  ReturnTime: Date;
+}
+
+
 @Component({
   selector: 'app-rent-car',
   templateUrl: './rent-car.component.html',
@@ -38,16 +47,24 @@ branches: any;
 
 
 async reserveCar(car: any) {
+const rentCar: RentCar = new RentCar();
+rentCar.CarNumber = car.CarNumber;
+rentCar.StartTime = this.carInforamtion.rentPeriod.begin;
+rentCar.EndTime = this.carInforamtion.rentPeriod.end;
+// TO DO : Get UserID From user
+rentCar.UserID = 21;
+// TO DO : Get UserID From user
 car.Available = 'N';
-const res =  await this.carsApi.updateCar(car);
-if (res.indexOf('successfully') > -1 ) {
+const updateCarResponse =  await this.carsApi.updateCar(car);
+const addRentCarResponse =  await this.carsApi.addRentCar(rentCar);
+
+if (updateCarResponse.indexOf('successfully') > -1 &&  addRentCarResponse.indexOf('successfully') > -1) {
   sweetalert2.fire({
     type: 'success',
     title: `Reservation Completed successfully`,
     html: `<h3> ${car.CarNumber} Rent successfully !</h3>`,
   });
 }
-// TO DO - updateRentCar !! 
-console.log(res);
+
 }
 }

@@ -14,7 +14,7 @@
             </div>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" (click)="rentCar(car,rentPeriod)">Take me for a ride</button>
+            <button  *ngIf="rentPeriod" mat-raised-button color="primary" (click)="rentCar(car,rentPeriod)">Take me for a ride</button>
         </mat-card-actions>
       </mat-card>
       

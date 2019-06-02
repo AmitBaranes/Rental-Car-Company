@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // tslint:disable-next-line:max-line-length
-import {MatTabsModule, MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatPaginatorModule, MatInputModule, MatIconModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSelectModule, MatExpansionModule, MatTableModule, MatTooltipModule, MatDialogModule} from '@angular/material';
+import {MatTabsModule, MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatPaginatorModule, MatInputModule, MatIconModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSelectModule, MatExpansionModule, MatTableModule, MatTooltipModule, MatDialogModule, MatMenuModule} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -17,6 +17,7 @@ import { UsersService } from './Services/users.service';
 import { PickCarComponent } from './Components/pick-car/pick-car.component';
 import { CarsService } from './Services/cars.service';
 import { FiltermultiPipe } from './Pipes/filterByMultiArgs';
+import { CarNumberPipe } from './Pipes/carNumber';
 import { CarCardComponent } from './Components/car-card/car-card.component';
 import { BranchesService } from './Services/branches.service';
 import { MangeUsersComponent } from './Components/mange-users/mange-users.component';
@@ -33,6 +34,7 @@ import { RentCarComponent } from './Components/rent-car/rent-car.component';
     RegisterComponent,
     PickCarComponent,
     FiltermultiPipe,
+    CarNumberPipe,
     CarCardComponent,
     MangeUsersComponent,
     RentCarComponent
@@ -43,6 +45,7 @@ import { RentCarComponent } from './Components/rent-car/rent-car.component';
     MatButtonModule,
     MatTabsModule,
     MatCardModule,
+    MatMenuModule,
     MatSelectModule,
     FormsModule,
     MatInputModule,
@@ -65,7 +68,8 @@ import { RentCarComponent } from './Components/rent-car/rent-car.component';
     MatToolbarModule,
     AppRoutingModule
   ],
+  entryComponents: [TabsComponent],
   providers: [UsersService, CarsService, BranchesService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, TabsComponent]
 })
 export class AppModule { }
