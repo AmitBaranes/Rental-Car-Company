@@ -22,6 +22,8 @@ import { CarCardComponent } from './Components/car-card/car-card.component';
 import { BranchesService } from './Services/branches.service';
 import { MangeUsersComponent } from './Components/mange-users/mange-users.component';
 import { RentCarComponent } from './Components/rent-car/rent-car.component';
+import { ManageCarsTypesComponent } from './Components/manage-cars-types/manage-cars-types.component';
+import { AddCarTypeComponent } from './Components/add-car-type/add-car-type.component';
 
 
 
@@ -37,7 +39,9 @@ import { RentCarComponent } from './Components/rent-car/rent-car.component';
     CarNumberPipe,
     CarCardComponent,
     MangeUsersComponent,
-    RentCarComponent
+    RentCarComponent,
+    ManageCarsTypesComponent,
+    AddCarTypeComponent
   ],
   imports: [
     BrowserAnimationsModule,

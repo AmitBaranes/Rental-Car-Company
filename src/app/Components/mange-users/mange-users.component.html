@@ -22,7 +22,7 @@
     <th mat-header-cell *matHeaderCellDef> Date Of Birth</th>
     <td mat-cell *matCellDef="let element">
           <mat-form-field >
-        <input matInput [disabled]="element.isEdit" [matDatepicker]="picker" [(ngModel)]="element.DateOfBirth" (selectedChanged)="userDateOfBirth($event,element)"  >
+        <input matInput [disabled]="element.isEdit" [matDatepicker]="picker"  [(ngModel)]="element.DateOfBirth" (selectedChanged)="userDateOfBirth($event,element)"  >
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker [startAt]="element.DateOfBirth" [(ngModel)]="element.DateOfBirth" ngDefaultControl  #picker ></mat-datepicker>
       </mat-form-field>

@@ -1,0 +1,95 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="Manufacturer">
+    <th mat-header-cell *matHeaderCellDef>Manufacturer</th>
+    <td mat-cell *matCellDef="let element"> 
+      <mat-form-field>
+          <input [disabled]="element.isEdit"  matInput [value]="element.Manufacturer" [(ngModel)]="element.Manufacturer">
+        </mat-form-field> 
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Model">
+    <th mat-header-cell *matHeaderCellDef>Model</th>
+    <td mat-cell *matCellDef="let element">
+        <mat-form-field>
+            <input [disabled]="element.isEdit"  matInput [value]="element.Model" [(ngModel)]="element.Model">
+          </mat-form-field> 
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Gear">
+    <th mat-header-cell *matHeaderCellDef>Gear</th>
+    <td mat-cell *matCellDef="let element">
+        <mat-form-field >
+            <mat-select [disabled]="element.isEdit"   [(ngModel)]="element.Gear"  >
+              <mat-option  *ngFor="let gear of gears" [value]="gear[0]">
+                {{gear}}
+              </mat-option>
+              </mat-select>
+          </mat-form-field>
+      </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Year">
+    <th mat-header-cell *matHeaderCellDef>Year</th>
+    <td mat-cell *matCellDef="let element">
+        <mat-form-field>
+            <input [disabled]="element.isEdit"  matInput [value]="element.Year" [(ngModel)]="element.Year">
+          </mat-form-field>  
+      </td>
+  </ng-container>
+
+  <ng-container matColumnDef="CostPerDay">
+    <th mat-header-cell *matHeaderCellDef>Cost Per Day</th>
+    <td mat-cell *matCellDef="let element">
+        <mat-form-field>
+            <input matInput [disabled]="element.isEdit" type="text" [ngModel]="element.CostPerDay | currency:'USD':'symbol'" [ngModelOptions]="{updateOn:'blur'}" 
+            (ngModelChange)="element.CostPerDay=$event.replace('$','')"/>
+          </mat-form-field> 
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="CostPerDayDelay">
+    <th mat-header-cell *matHeaderCellDef>Cost Per Day Delay</th>
+    <td mat-cell *matCellDef="let element">
+       <mat-form-field>
+        <input [disabled]="element.isEdit"  matInput [value]="element.CostPerDayDelay" [ngModel]="element.CostPerDayDelay|currency:'USD':'symbol' ">
+      </mat-form-field> </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="Image">
+    <th mat-header-cell *matHeaderCellDef>Image</th>
+    <td mat-cell *matCellDef="let element"> 
+      <img  [src]="element.Image ? element.Image : './assets/PhotoNA.jpg'"   [matTooltipDisabled]="element.isEdit" matTooltip="Click to update"  style="width: 45px"  type='file'  (click)="!element.isEdit && fileInput.click()"  /> 
+      <input hidden (change)="onSelectFile($event,element)" #fileInput type="file" id="file">
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Actions">
+      <th mat-header-cell *matHeaderCellDef> 
+          <button mat-icon-button color="primary" >
+              <mat-icon  mat-dialog-close (click)="addCarType()">add</mat-icon>
+            </button>
+      </th>
+      <td mat-cell *matCellDef="let element"> 
+          <button mat-icon-button color="warn" (click)="deleteCarType(element)">
+              <mat-icon >delete</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" >
+              <mat-icon  matSuffix   *ngIf="!element.icon"  (click)="element.isEdit = !element.isEdit;element.icon = true">edit</mat-icon>
+                <mat-icon  matSuffix  *ngIf="element.icon"   (click)="updateCarType(element)" >done_outline</mat-icon>
+              <mat-icon  matSuffix  *ngIf="element.icon" (click)="element.isEdit = !element.isEdit;element.icon = false">close</mat-icon>
+            </button>
+      </td>
+    </ng-container>
+
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+
+<mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>

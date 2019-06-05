@@ -22,8 +22,6 @@ export class CarCardComponent  {
 @Input() year: any;
 @Input() gear: any;
 @Input() rentPeriod: IRentPeriod;
-documentReady: boolean;
-defaultElevation = 2;
 
 
 rentCar(car: any, rentPeriod: IRentPeriod) {

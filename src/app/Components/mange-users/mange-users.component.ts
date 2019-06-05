@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UsersService } from 'src/app/Services/users.service';
-import { MatTableDataSource, MatPaginator, MatDatepickerInputEvent, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDatepickerInputEvent, MatDialog } from '@angular/material';
 import sweetalert2 from 'sweetalert2';
 import { RegisterComponent } from '../register/register.component';
 
@@ -30,7 +30,6 @@ export class MangeUsersComponent implements OnInit {
   constructor(private userApi: UsersService, private dialog: MatDialog) { }
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   allUsers: any;
-  isEdit: boolean;
   genders: string[] = ['Male', 'Female', 'Other'];
   displayedColumns: string[] = ['FirstName', 'LastName', 'ID', 'DateOfBirth', 'Gender', 'Email', 'RoleType', 'Image', 'Actions'];
   dataSource = new MatTableDataSource<any>();
@@ -88,7 +87,6 @@ export class MangeUsersComponent implements OnInit {
 }
 
 async updateUser(user: IUser) {
-  console.log(user);
   sweetalert2.fire({
     title: `Are you sure you want to update User ID: ${user.ID}?`,
     text: `You won't be able to revert this!`,
