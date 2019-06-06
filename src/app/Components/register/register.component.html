@@ -94,7 +94,8 @@
     </form>
   </mat-card-content>
   <mat-card-actions>
-      <button  mat-raised-button (click)="register()" color="primary">REGISTER</button>
+      <button  mat-raised-button (click)="register()" color="primary">Register</button>
+      <button *ngIf="router.url.indexOf('Managment') > -1"  mat-raised-button id="close-btn" color="warn" (click)="dialog.closeAll()">Close</button>
     </mat-card-actions>
     </div>
 

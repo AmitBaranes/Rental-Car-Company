@@ -41,7 +41,7 @@ import { AddCarTypeComponent } from './Components/add-car-type/add-car-type.comp
     MangeUsersComponent,
     RentCarComponent,
     ManageCarsTypesComponent,
-    AddCarTypeComponent
+    AddCarTypeComponent,
   ],
   imports: [
     BrowserAnimationsModule,

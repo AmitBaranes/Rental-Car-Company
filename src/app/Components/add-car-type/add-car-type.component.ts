@@ -1,8 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { CarsService } from 'src/app/Services/cars.service';
 import { FormControl, FormGroupDirective, NgForm, FormGroup, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material';
+import { ErrorStateMatcher, MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import sweetalert2 from 'sweetalert2';
+import { NativeDateAdapter, DateAdapter,  } from '@angular/material';
+import * as _moment from 'moment';
+import { default as _rollupMoment } from 'moment';
+
+const moment = _rollupMoment || _moment;
+
+export class CustomDateAdapter extends NativeDateAdapter {
+  format(date: Date, displayFormat: Object): string {
+    const formatString = 'YYYY';
+    return moment(date).format(formatString);
+  }
+}
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -26,11 +38,16 @@ export class ICarType {
 @Component({
   selector: 'app-add-car-type',
   templateUrl: './add-car-type.component.html',
-  styleUrls: ['./add-car-type.component.scss']
+  styleUrls: ['./add-car-type.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter, useClass: CustomDateAdapter
+    }
+  ]
 })
 export class AddCarTypeComponent implements OnInit {
 
-  constructor(private carApi: CarsService) { }
+  constructor(private carApi: CarsService, public dialog: MatDialog) { }
   form: ICarType = new ICarType();
   matcher = new MyErrorStateMatcher();
   fg: FormGroup = new FormGroup({
@@ -53,10 +70,8 @@ export class AddCarTypeComponent implements OnInit {
       Validators.pattern(/^\S*$/),
       Validators.pattern(/^\d+(\.\d{1,6})?$/)
     ]),
-    YearFormControl : new FormControl('', [
+    DateFormControl : new FormControl('', [
       Validators.required,
-      Validators.pattern(/^\S*$/),
-      Validators.pattern(/^\d+$/)
     ])
   });
 
@@ -80,24 +95,34 @@ export class AddCarTypeComponent implements OnInit {
     }
 }
 
+
+addYearToForm(event: Date) {
+  this.fg.get('DateFormControl').setValue(event);
+  this.form.Year  = event.getFullYear().toString();
+}
+
 async addCarType() {
   if (!this.fg.valid || typeof  this.form.Gear === 'undefined' || typeof  this.form.Image === 'undefined') {
     sweetalert2.fire({
       type: 'error',
       title: 'Oops...',
-      html: '<h3>Some fields are missing or incorrect!</h3>',
+      html: '<h3>some fields on your form are invalid!<br>please check your information</h3>',
     });
     return;
   }
- //TODO! 
-  // const addNewUser = await this.carApi.add(this.form);
-  // if (addNewUser.indexOf('successfully') > -1 ) {
-  //   sweetalert2.fire({
-  //     type: 'info',
-  //     title: `Welcome ${this.form.FirstName} ${this.form.LastName}`,
-  //   });
-  // }
-  //TODO! 
+  const addCarTypeResponse = await this.carApi.addCarType(this.form);
+  if (addCarTypeResponse.indexOf('successfully') > -1 ) {
+    sweetalert2.fire({
+      type: 'info',
+      title: `Car Type added successfully`,
+    });
+  } else {
+    sweetalert2.fire({
+      type: 'error',
+      title: 'Something went wrong!',
+      text: `Failed to add car type!`,
+    });
+ }
 }
 
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDatepickerInputEvent, ErrorStateMatcher } from '@angular/material';
+import { MatDatepickerInputEvent, ErrorStateMatcher, MatDialog } from '@angular/material';
 import sweetalert2 from 'sweetalert2';
 import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from '@angular/forms';
 import { UsersService } from 'src/app/Services/users.service';
@@ -34,7 +34,8 @@ export class IUser {
 
 
 export class RegisterComponent implements OnInit {
-  constructor(private usersApi: UsersService, public router: Router ) {}
+  constructor(private usersApi: UsersService, public router: Router, public dialog: MatDialog) { }
+
   submitted: boolean;
   roleTypes: string[] = ['Customer', 'Manager', 'Admin'];
   matcher = new MyErrorStateMatcher();

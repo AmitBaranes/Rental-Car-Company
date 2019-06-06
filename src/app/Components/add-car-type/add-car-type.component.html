@@ -23,7 +23,7 @@
              </mat-form-field>
              <mat-form-field  class="full-width">
                 <mat-label>Cost Per Day</mat-label>
-                <input  matInput  placeholder=" CostPerDay" #input formControlName="CostPerDayFormControl" [(ngModel)]="form.CostPerDay" [errorStateMatcher]="matcher"  required>
+                <input  matInput  placeholder=" CostPerDay" #input formControlName="CostPerDayFormControl" type="number"  [(ngModel)]="form.CostPerDay" [errorStateMatcher]="matcher"  required>
                 <mat-error *ngIf="fg.get('CostPerDayFormControl').hasError('pattern')">
                  <strong>Digits only</strong>
                </mat-error>
@@ -33,7 +33,7 @@
              </mat-form-field>
              <mat-form-field  class="full-width" >
                 <mat-label>Cost Per Day Delay</mat-label>
-                <input  matInput  placeholder="Cost Per Day Delay" formControlName="CostPerDayDelayFormControl"  [(ngModel)]="form.CostPerDayDelay" [errorStateMatcher]="matcher"  required>
+                <input  matInput  placeholder="Cost Per Day Delay" formControlName="CostPerDayDelayFormControl" type="number" [(ngModel)]="form.CostPerDayDelay" [errorStateMatcher]="matcher"  required>
                 <mat-error *ngIf="fg.get('CostPerDayDelayFormControl').hasError('pattern')">
                   <strong>Digits only</strong>
                </mat-error>
@@ -41,16 +41,11 @@
                 Cost Per Day Delay is <strong>required</strong>
                </mat-error>
               </mat-form-field>
-             <mat-form-field  class="full-width"  >
-                <mat-label>Year</mat-label>
-                <input  matInput  placeholder="Year"   [errorStateMatcher]="matcher" formControlName="YearFormControl"  [(ngModel)]="form.Year" required>
-                    <mat-error *ngIf="fg.get('YearFormControl').hasError('pattern')">
-                      <strong>Remove white spaces</strong>   
-               </mat-error>
-               <mat-error *ngIf="fg.get('YearFormControl').hasError('required')">
-                 Year is <strong>required</strong>
-               </mat-error>
-             </mat-form-field>
+              <mat-form-field>
+                  <input matInput [matDatepicker]="picker" placeholder="Choose year" value="form.Year" formControlName="DateFormControl">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker (yearSelected)="addYearToForm($event);picker.close()" startView="multi-year"></mat-datepicker>
+                </mat-form-field>
                 <label >Gear:</label>
                 <mat-radio-group required  [(ngModel)]="form.Gear" [ngModelOptions]="{standalone: true}">
                   <mat-radio-button  value="A">Automatic</mat-radio-button>
@@ -59,17 +54,19 @@
                 <mat-error [ngStyle]="{'font-size': '75%'}" *ngIf="!form.Gear" >
                     Gear is <strong>required</strong>
                 </mat-error>
-          <button id="btn-upload-pic" mat-raised-button (click)="fileInput.click()" color="primary"    >Car Image</button>
+                <div class="image-wrapper">
+          <button id="btn-upload-pic" mat-raised-button (click)="fileInput.click()" color="primary">Car Image</button>
           <img  *ngIf="form.Image"  [src]="form.Image" id="selected-image"/>
           <input hidden (change)="onSelectFile($event)" #fileInput type="file" id="file">
+          </div>
       </form>
     </mat-card-content>
     <mat-card-actions>
         <button  mat-raised-button color="primary"  (click)="addCarType()" >Add New Car Type</button>
+        <button mat-raised-button id="close-btn" color="warn" (click)="dialog.closeAll()">Close</button>
       </mat-card-actions>
       </div>
   
       <!-- <input [hidden]="true"  id="btn-uploadfile" type="file" #fileInput ng2FileSelect [uploader]="uploader" (onFileSelected)="onFileSelected($event)" /> -->
   
       <input [hidden]="true"  id="btn-uploadfile" type='file'   #fileInput (change)="onSelectFile($event)">
-      

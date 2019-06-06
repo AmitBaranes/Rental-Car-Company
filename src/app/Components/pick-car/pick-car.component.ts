@@ -30,8 +30,6 @@ export class PickCarComponent implements OnInit {
   currentDate: Date = new Date();
   filter: boolean ;
   rentPeriod: IRentPeriod;
-  // pickUpLocation: number;
-  // returnLocation: number;
 
   calculateDaysDiff(rentPeriod: any) {
     this.rentPeriod = rentPeriod;
@@ -67,10 +65,8 @@ updateFilterStatus() {
 
 
   async ngOnInit() {
-    // this.allCars = await this.carsApi.getAllCarsType();
     this.allCars  = await this.carsApi.getAllCars();
     this.allCarsType =  this.allCars.filter(s => s.Available === 'Y' && s.Proper === 'Y' ).map(car => car.CarType);
-    // debugger;
   }
 
 }

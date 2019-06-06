@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatDatepickerInputEvent, MatDialog } from '@angular/material';
 import sweetalert2 from 'sweetalert2';
 import { CarsService } from 'src/app/Services/cars.service';
+import { AddCarTypeComponent } from '../add-car-type/add-car-type.component';
 
 export interface ICarType {
   Manufacturer: string;
@@ -51,6 +52,11 @@ export class ManageCarsTypesComponent implements OnInit {
 
 
 addCarType() {
+    const dialogRef = this.dialog.open(AddCarTypeComponent, {
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });
 }
 
 

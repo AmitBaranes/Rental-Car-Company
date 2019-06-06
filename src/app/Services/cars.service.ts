@@ -53,6 +53,14 @@ export class CarsService {
     return rentCarResponse;
   }
 
+
+  public async addCarType(rentCar: any) {
+    const addCarTypeResponse = await this.http.post<any>(`${serverURL}/addCarType`, rentCar).toPromise()
+    .then(res => res.Message, (err: HttpErrorResponse) => err.message);
+    return addCarTypeResponse;
+  }
+
+
   public async deleteCarType(carType: any) {
     const deleteCarTypeResponse = await this.http.post<any>(`${serverURL}/deleteCarType`, carType).toPromise()
     .then(res => res.Message, (err: HttpErrorResponse) => err.message);
