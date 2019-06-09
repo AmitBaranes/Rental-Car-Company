@@ -15,7 +15,7 @@
             <mat-form-field class="full-width" >
                 <mat-label>Mileage</mat-label>
                 <input matInput  type="text" [ngModel]="rentCar.Mileage| numberPipe"  [errorStateMatcher]="matcher"   [formControl]="MileageFormControl"  name="Mileage" required
-                (ngModelChange)="rentCar.Mileage=$event"  />
+                (ngModelChange)="rentCar.Mileage=$event.replace(',','')"  />
                 <mat-error *ngIf="MileageFormControl.hasError('pattern')">
                  <strong>Digits only</strong>
                </mat-error>

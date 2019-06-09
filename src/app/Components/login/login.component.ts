@@ -1,11 +1,14 @@
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
 import sweetalert2 from 'sweetalert2';
 import { UsersService } from 'src/app/Services/users.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { MatDialog } from '@angular/material';
+import { CommonService } from 'src/app/Services/commonService';
+
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -45,7 +48,7 @@ export class LoginComponent {
   states = {};
   showFailedLogin = false;
   hide = true;
-  constructor(private router: Router, private users: UsersService) {
+  constructor(private router: Router, private users: UsersService, private dialog: MatDialog, private commonService: CommonService) {
     this.states['state1'] = 'shakestart';
     this.states['state2'] = 'shakestart';
   }
@@ -76,7 +79,12 @@ export class LoginComponent {
     const loginResponse = await this.users.login(email, password);
     if (!loginResponse.status) {
       sessionStorage.setItem('token', loginResponse.Message);
-      this.router.navigate(['/home']);
+      this.commonService.setNumbersOfOrders();
+      if (this.router.url.indexOf('login') > -1) {
+        this.router.navigate(['/home']);
+      } else {
+        this.dialog.closeAll();
+      }
     } else {
       this.shakeMe('state1');
       this.showFailedLogin = true;

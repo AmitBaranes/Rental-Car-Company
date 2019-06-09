@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // tslint:disable-next-line:max-line-length
-import {MatTabsModule, MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatPaginatorModule, MatInputModule, MatIconModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSelectModule, MatExpansionModule, MatTableModule, MatTooltipModule, MatDialogModule, MatMenuModule, MatBadgeModule} from '@angular/material';
+import {MatTabsModule, MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatPaginatorModule, MatInputModule, MatIconModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSelectModule, MatExpansionModule, MatTableModule, MatTooltipModule, MatDialogModule, MatMenuModule, MatBadgeModule, MatTreeModule} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -30,7 +30,10 @@ import { NumberPipePipe } from './Pipes/toNumber';
 import { ManageOrdersComponent } from './Components/manage-orders/manage-orders.component';
 import { AddOrderComponent } from './Components/add-order/add-order.component';
 import { AuthInterceptor } from './Interceptor/httpconfig.interceptor';
-
+import { CommonService } from './Services/commonService';
+import { EventEmitterService } from './Services/event-emitter.service';
+import { MyOrdersComponent } from './Components/my-orders/my-orders.component';
+import { AuthGuard } from './Gurds/auth.guard';
 
 
 @NgModule({
@@ -53,6 +56,7 @@ import { AuthInterceptor } from './Interceptor/httpconfig.interceptor';
     AddCarStockComponent,
     ManageOrdersComponent,
     AddOrderComponent,
+    MyOrdersComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -60,6 +64,7 @@ import { AuthInterceptor } from './Interceptor/httpconfig.interceptor';
     MatButtonModule,
     MatTabsModule,
     MatCardModule,
+    MatTreeModule,
     MatMenuModule,
     MatSelectModule,
     FormsModule,
@@ -90,7 +95,7 @@ import { AuthInterceptor } from './Interceptor/httpconfig.interceptor';
     useClass: AuthInterceptor,
     multi: true,
   },
-  UsersService, CarsService, BranchesService],
+  AuthGuard, UsersService, CarsService, BranchesService, CommonService, EventEmitterService],
   bootstrap: [AppComponent, TabsComponent]
 })
 export class AppModule { }

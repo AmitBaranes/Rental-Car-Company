@@ -4,9 +4,11 @@
       <a  mat-button  routerLink="/home">Home</a>
       <a  mat-button  routerLink="/Cars/selectCar">Pick Your Car</a>
        <span class="spacer"></span>
+       <div *ngIf="!getUserName()">
        <a  mat-button  routerLink="/register">Register</a>
        <a  mat-button  routerLink="/login">Login</a>
-       <button mat-button [matMenuTriggerFor]="Managment">Managment</button>
+       </div>
+       <button mat-button *ngIf="getRole() === 'A'" [matMenuTriggerFor]="Managment">Managment</button>
        <mat-menu #Managment="matMenu">
         <a  mat-button  routerLink="/Managment/Users">Users</a>
         <button mat-menu-item [matMenuTriggerFor]="Cars">Cars</button>
@@ -16,10 +18,18 @@
             <button mat-menu-item  routerLink="/Managment/Cars/Orders">Orders</button>
         </mat-menu>
       </mat-menu>
-            <!-- <mat-icon [matBadge]="getNumberOfOrders()" matBadgeColor="warn">shopping_cart</mat-icon> -->
-            <mat-icon class="icon">shopping_cart</mat-icon>
-            <!-- <span class="badge">{{getNumberOfOrders()}}</span> -->
-          <mat-icon  matBadgeColor="warn">account_circle</mat-icon>
+      <div  *ngIf="getRole()">
+          <span   *ngIf="getRole() === 'C'" matTooltip="Shopping Cart"><button mat-icon-button [matMenuTriggerFor]="shoppingMenu"><mat-icon matBadge="{{getNumberOfOrders()}}" matBadgeColor="warn">shopping_cart</mat-icon></button></span>
+          <mat-menu #shoppingMenu="matMenu">
+              <p> <button mat-icon-button *ngIf="getNumberOfOrders()" routerLink="/Managment/MyOrders" ><mat-icon>business_center</mat-icon> My Orders</button></p>
+          </mat-menu>
+          <span matTooltip="My Account"><button mat-icon-button  [matMenuTriggerFor]="accountMenu"  ><mat-icon>account_circle</mat-icon></button></span>
+          <mat-menu #accountMenu="matMenu">
+              <strong><p> Hello {{getUserName()}}</p></strong>
+              <p><button mat-icon-button (click)="signOut()"><mat-icon>perm_identity</mat-icon> Sign Out</button></p>
+              <p> <button mat-icon-button ><mat-icon>face</mat-icon> My Account</button></p>
+            </mat-menu>
+      </div>
     </mat-toolbar-row>
  </mat-toolbar>
 

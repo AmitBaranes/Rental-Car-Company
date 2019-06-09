@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { CarsService } from 'src/app/Services/cars.service';
+import { CommonService } from 'src/app/Services/commonService';
 
 @Component({
   selector: 'app-tabs',
@@ -9,20 +7,26 @@ import { CarsService } from 'src/app/Services/cars.service';
   styleUrls: ['./tabs.component.scss']
 })
 export class TabsComponent implements OnInit {
-  constructor(private router: Router, private carsApi: CarsService) { }
-  jwtHelper = new JwtHelperService();
-  tokenDecoder: any;
-  userName: string;
 
-  async getNumberOfOrders() {
-    const userID = this.tokenDecoder.userID;
-    return await this.carsApi.getAllRentCars().then(res => res.filter(order => order.UserID === userID).length);
+  constructor(private commonService: CommonService) {
   }
 
-  async ngOnInit() {
-    const token = sessionStorage.getItem('token');
-    this.tokenDecoder = this.jwtHelper.decodeToken(token);
-    this.userName = this.tokenDecoder.userName;
+  signOut() {
+    this.commonService.signOut();
   }
 
+  getUserName(): string {
+    return this.commonService.getUserName();
+  }
+
+  getRole(): string {
+    return this.commonService.getRole();
+  }
+
+  getNumberOfOrders() {
+    return sessionStorage.getItem('numberOfOrders');
+  }
+
+  ngOnInit() {
+  }
 }

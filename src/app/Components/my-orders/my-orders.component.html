@@ -1,0 +1,36 @@
+<div class="wrapper-page">
+    <h3>My Orders</h3>
+    <mat-card  *ngFor='let order of myOrders' >
+                <mat-card-header>
+                  <div mat-card-avatar></div>
+                </mat-card-header>
+                <img mat-card-image class='car-image' [src]="order.Image">
+                <mat-card-content>
+                    <h1>Rental Details</h1>
+                    <h3>Vehicle</h3>
+                    <p>{{order.Manufacturer}} {{order.Model}} {{order.Year}}</p>
+                    <p>Car Number : {{order.CarNumber | CarNumber}}</p> 
+                    <div class="image-text-wrapper">
+                        <img src="./assets/gearshift.png" style="height:26px;">
+                      </div>
+                      <div class="gear-text" [innerHTML]="order.Gear === 'A' ? 'Automatic' : 'Manually' " >
+                      </div>
+                    <h3>Dates & Times</h3>
+                    <p>Pick-Up Time : {{order.StartTime | date:'mediumDate'}} </p>
+                    <p >Return Time : {{order.EndTime | date:'mediumDate'}} </p>
+                    <p >Actual Return Time : {{order.ReturnTime | date:'mediumDate'}} </p>
+                    <!-- <h3>Pick-Up/Return Location</h3>
+                    <p> Pick-Up Location : {{branchInfo.City}},{{branchInfo.Address}}</p>
+                    <p>Return Location : {{branchInfo.City}},{{branchInfo.Address}}</p> -->
+                    <!-- <button mat-icon-button color="primary" (click)="editBranchReturn()" >
+                        <mat-icon  matSuffix >edit</mat-icon>
+                        </button> -->
+                    <h3>Price</h3>
+                    <p>For day : {{order.CostPerDay | currency:'USD':'symbol'}} </p>
+                    <p>For delay : {{order.CostPerDayDelay | currency:'USD':'symbol'}} </p>
+                    <p>Total : {{(order.diffDaysRentTime * order.CostPerDay) + (order.diffDaysReturn * order.CostPerDayDelay) | currency:'USD':'symbol'}} </p>
+                </mat-card-content>
+                <mat-card-actions>
+                </mat-card-actions>
+              </mat-card>
+    </div>

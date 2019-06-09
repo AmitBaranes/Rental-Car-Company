@@ -9,19 +9,21 @@ import { RentCarComponent } from './Components/rent-car/rent-car.component';
 import { ManageCarsTypesComponent } from './Components/manage-cars-types/manage-cars-types.component';
 import { ManageCarsStockComponent } from './Components/manage-cars-stock/manage-cars-stock.component';
 import { ManageOrdersComponent } from './Components/manage-orders/manage-orders.component';
-import { AddOrderComponent } from './Components/add-order/add-order.component';
+import { MyOrdersComponent } from './Components/my-orders/my-orders.component';
+import { AuthGuard } from './Gurds/auth.guard';
 
 const routes: Routes = [
   { path: 'Cars/selectCar', component: PickCarComponent },
-  { path: 'Cars/Payment', component: RentCarComponent },
+  { path: 'Cars/Payment', component: RentCarComponent , canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'Managment/Users', component: MangeUsersComponent },
-  { path: 'Managment/Cars/Types', component: ManageCarsTypesComponent },
-  { path: 'Managment/Cars/Stock', component: ManageCarsStockComponent },
-  { path: 'Managment/Cars/Orders', component: ManageOrdersComponent },
-  { path: 'test', component: AddOrderComponent },
+  { path: 'Managment/Users', component: MangeUsersComponent , canActivate: [AuthGuard]},
+  { path: 'Managment/Cars/Types', component: ManageCarsTypesComponent , canActivate: [AuthGuard]},
+  { path: 'Managment/Cars/Stock', component: ManageCarsStockComponent , canActivate: [AuthGuard]},
+  { path: 'Managment/Cars/Orders', component: ManageOrdersComponent , canActivate: [AuthGuard]},
+  { path: 'Managment/MyOrders', component: MyOrdersComponent , canActivate: [AuthGuard] },
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({

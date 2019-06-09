@@ -38,6 +38,13 @@ export class CarsService {
     return allRentCars;
   }
 
+  public async  getRentCarsByUserID(userID: number) {
+    const params: any = {userID};
+    const rentCarsByUserID = await this.http.get<any>(`${serverURL}/getRentCarsByUserID`, {params} ).toPromise();
+    return rentCarsByUserID;
+  }
+
+
   public async updateCarStock(car: any) {
     const updateCarResponse = await this.http.put<any>(`${serverURL}/updateCarStock`, car).toPromise()
     .then(res => res.Message, (err: HttpErrorResponse) => err.message);

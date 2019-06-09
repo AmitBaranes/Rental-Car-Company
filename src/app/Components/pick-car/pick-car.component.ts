@@ -68,8 +68,8 @@ updateFilterStatus() {
     .then(res => res.filter(car => car.Available === 'Y' && car.Proper === 'Y') );
     const getAllCarsType = await this.carsApi.getAllCarsType();
     for (const availableCar of availableCarsInStock) {
-      const exist = getAllCarsType.filter(car => car.TypeID === availableCar.TypeID);
-      this.allCarsType.push(exist[0]);
+      const exist = getAllCarsType.find(car => car.TypeID === availableCar.TypeID);
+      this.allCarsType.push(exist);
     }
   }
 

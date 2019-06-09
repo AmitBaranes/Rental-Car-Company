@@ -7,6 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
+import { CommonService } from 'src/app/Services/commonService';
 
 export class RentCar {
   CarNumber: string;
@@ -29,11 +30,11 @@ export class RentCarComponent implements OnInit {
   relevantCar: any;
   branchInfo: any;
   branches: any;
-  constructor(private router: Router, private carsApi: CarsService, private branchApi: BranchesService, private dialog: MatDialog) {
+  constructor(private router: Router, private carsApi: CarsService, private branchApi: BranchesService,
+    private dialog: MatDialog, private commonService: CommonService) {
     const navigation = this.router.getCurrentNavigation();
     const car = navigation.extras as { carInforamtion: any };
     this.carInforamtion = car;
-    console.log(this.carInforamtion);
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
     this.daysRange = Math.round(
       Math.abs(
@@ -86,6 +87,7 @@ export class RentCarComponent implements OnInit {
         title: `Reservation Completed successfully`,
         html: `<h3> ${car.CarNumber} Rented successfully !</h3>`,
       });
+      this.commonService.setNumbersOfOrders();
     }
   }
 }

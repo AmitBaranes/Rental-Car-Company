@@ -44,6 +44,7 @@ export class AddCarStockComponent implements OnInit {
     ]);
 
   async addCarStock() {
+    console.log(this.rentCar);
     const classLength = Object.keys(this.rentCar).length;
     if (classLength !== 6  || !this.CarNumberFormControl.valid || !this.MileageFormControl.valid) {
       sweetalert2.fire({
