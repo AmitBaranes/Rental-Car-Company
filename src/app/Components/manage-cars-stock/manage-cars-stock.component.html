@@ -1,0 +1,87 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="CarNumber">
+    <th mat-header-cell *matHeaderCellDef>CarNumber</th>
+    <td mat-cell *matCellDef="let element">
+      {{element.CarNumber}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Mileage">
+    <th mat-header-cell *matHeaderCellDef>Mileage</th>
+    <td mat-cell *matCellDef="let element">
+        <mat-form-field>
+            <input matInput [disabled]="element.isEdit" type="text" [ngModel]="element.Mileage | number: '2.'" [ngModelOptions]="{updateOn:'blur'}"  
+            (ngModelChange)="element.Mileage=$event"  />
+          </mat-form-field> 
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Proper">
+    <th mat-header-cell *matHeaderCellDef>Proper</th>
+    <td mat-cell *matCellDef="let element">
+      <mat-form-field>
+        <mat-select [disabled]="element.isEdit" [(ngModel)]="element.Proper">
+          <mat-option *ngFor="let status of YesNo" [value]="status[0]">
+            {{status}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Available">
+    <th mat-header-cell *matHeaderCellDef>Available</th>
+    <td mat-cell *matCellDef="let element">
+      <mat-form-field>
+        <mat-select [disabled]="element.isEdit" [(ngModel)]="element.Available">
+          <mat-option *ngFor="let status of YesNo" [value]="status[0]">
+            {{status}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="BranchID">
+    <th mat-header-cell *matHeaderCellDef>Branch</th>
+    <td mat-cell *matCellDef="let element">
+        <mat-form-field>
+            <mat-select [disabled]="element.isEdit" [(ngModel)]="element.BranchID">
+              <mat-option *ngFor="let branch of branches" [value]="branch.BranchID">
+                {{branch.City}} , {{branch.Address}} 
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+    </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="Actions">
+    <th mat-header-cell *matHeaderCellDef>
+      <button mat-icon-button color="primary">
+        <mat-icon mat-dialog-close (click)="addCarToStock()">add</mat-icon>
+      </button>
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button color="warn" (click)="deleteCarToStock(element)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button color="primary">
+        <mat-icon matSuffix *ngIf="!element.icon" (click)="element.isEdit = !element.isEdit;element.icon = true">edit
+        </mat-icon>
+        <mat-icon matSuffix *ngIf="element.icon" (click)="updateCarToStock(element)">done_outline</mat-icon>
+        <mat-icon matSuffix *ngIf="element.icon" (click)="element.isEdit = !element.isEdit;element.icon = false">close
+        </mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+
+<mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>

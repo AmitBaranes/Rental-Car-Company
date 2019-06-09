@@ -15,8 +15,7 @@ interface IRentPeriod {
 })
 export class PickCarComponent implements OnInit {
   constructor(private carsApi: CarsService, private branchesApi: BranchesService) { }
-  allCars: any;
-  allCarsType: any;
+  allCarsType: any = [];
   gears: string[] = ['Automatic', 'Manually'];
   manufacturers: string[];
   models: string[];
@@ -65,8 +64,13 @@ updateFilterStatus() {
 
 
   async ngOnInit() {
-    this.allCars  = await this.carsApi.getAllCars();
-    this.allCarsType =  this.allCars.filter(s => s.Available === 'Y' && s.Proper === 'Y' ).map(car => car.CarType);
+    const availableCarsInStock = await this.carsApi.getAllCars()
+    .then(res => res.filter(car => car.Available === 'Y' && car.Proper === 'Y') );
+    const getAllCarsType = await this.carsApi.getAllCarsType();
+    for (const availableCar of availableCarsInStock) {
+      const exist = getAllCarsType.filter(car => car.TypeID === availableCar.TypeID);
+      this.allCarsType.push(exist[0]);
+    }
   }
 
 }

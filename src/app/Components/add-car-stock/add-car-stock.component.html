@@ -1,0 +1,67 @@
+<div id="wrapper">
+    <mat-card-content>
+        <form class="my-form">
+              <mat-form-field class="full-width" >
+                  <mat-label>Car Number</mat-label>
+                  <input  matInput    #input [errorStateMatcher]="matcher" [formControl]="CarNumberFormControl" name="CarNumber" maxlength="8" [(ngModel)]="rentCar.CarNumber"  required>
+                  <mat-hint align="end">{{input.value?.length || 0}}/8</mat-hint>
+                  <mat-error *ngIf="CarNumberFormControl.hasError('pattern')">
+                   <strong>Digits only</strong>
+                 </mat-error>
+                 <mat-error *ngIf="CarNumberFormControl.hasError('required')">
+                  Car Number is <strong>required</strong>
+                 </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width" >
+                <mat-label>Mileage</mat-label>
+                <input matInput  type="text" [ngModel]="rentCar.Mileage| numberPipe"  [errorStateMatcher]="matcher"   [formControl]="MileageFormControl"  name="Mileage" required
+                (ngModelChange)="rentCar.Mileage=$event"  />
+                <mat-error *ngIf="MileageFormControl.hasError('pattern')">
+                 <strong>Digits only</strong>
+               </mat-error>
+               <mat-error *ngIf="MileageFormControl.hasError('required')">
+                  Mileage is <strong>required</strong>
+               </mat-error>
+          </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>Type</mat-label>
+                <mat-select  name="Type" [(ngModel)]="rentCar.TypeID" >
+                  <mat-option *ngFor="let carType of carsType" [value]="carType.TypeID" >
+                    {{carType.Manufacturer}} {{carType.Model}} {{carType.Year}}  - {{carType.Gear}} 
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                  <mat-label>Proper</mat-label>
+                  <mat-select   name="Proper" [(ngModel)]="rentCar.Proper">
+                    <mat-option *ngFor="let status of YesNo" [value]="status[0]">
+                      {{status}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <mat-label>Available</mat-label>
+                    <mat-select name="Available" [(ngModel)]="rentCar.Available">
+                      <mat-option *ngFor="let status of YesNo" [value]="status[0]">
+                        {{status}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field class="full-width">
+                  <mat-label>Branch</mat-label>
+                      <mat-select name="Branch" [(ngModel)]="rentCar.BranchID">
+                        <mat-option *ngFor="let branch of branches" [value]="branch.BranchID">
+                          {{branch.City}} , {{branch.Address}} 
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+        </form>
+      </mat-card-content>
+      <mat-card-actions>
+          <button  mat-raised-button color="primary"  (click)="addCarStock()" >Add New Car</button>
+          <button mat-raised-button id="close-btn" color="warn" (click)="dialog.closeAll()">Close</button>
+        </mat-card-actions>
+        </div>
+    
+        <!-- <input [hidden]="true"  id="btn-uploadfile" type="file" #fileInput ng2FileSelect [uploader]="uploader" (onFileSelected)="onFileSelected($event)" /> -->
+    

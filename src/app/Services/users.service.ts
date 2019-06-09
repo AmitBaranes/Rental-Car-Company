@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse, HttpResponse } 
 const serverURL = 'http://localhost:8080/api/Users';
 
 interface IUser {
+  UserID: number;
   FirstName: string;
   LastName: string;
   ID: string;
@@ -24,7 +25,7 @@ export class UsersService {
 
   constructor(private http: HttpClient) { }
   public async  getAllUsers() {
-    return await this.http.get<IUser>(`${serverURL}/GetUsers`).toPromise();
+    return await this.http.get<IUser[]>(`${serverURL}/GetUsers`).toPromise();
   }
 
   public async register(user: IUser) {

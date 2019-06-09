@@ -33,8 +33,19 @@ export class CarsService {
     return allCars;
   }
 
-  public async updateCar(car: any) {
-    const updateCarResponse = await this.http.put<any>(`${serverURL}/updateCar`, car).toPromise()
+  public async  getAllRentCars() {
+    const allRentCars = await this.http.get<any>(`${serverURL}/getAllRentCars`).toPromise();
+    return allRentCars;
+  }
+
+  public async updateCarStock(car: any) {
+    const updateCarResponse = await this.http.put<any>(`${serverURL}/updateCarStock`, car).toPromise()
+    .then(res => res.Message, (err: HttpErrorResponse) => err.message);
+    return updateCarResponse;
+  }
+
+  public async updateCarOrder(carOrder: any) {
+    const updateCarResponse = await this.http.put<any>(`${serverURL}/updateCarOrder`, carOrder).toPromise()
     .then(res => res.Message, (err: HttpErrorResponse) => err.message);
     return updateCarResponse;
   }
@@ -47,12 +58,17 @@ export class CarsService {
   }
 
 
-  public async addRentCar(rentCar: any) {
-    const rentCarResponse = await this.http.post<any>(`${serverURL}/addRent`, rentCar).toPromise()
+  public async addRentOrder(rentCar: any) {
+    const rentCarResponse = await this.http.post<any>(`${serverURL}/addRentOrder`, rentCar).toPromise()
     .then(res => res.Message, (err: HttpErrorResponse) => err.message);
     return rentCarResponse;
   }
 
+  public async addCarToStock(car: any) {
+    const rentCarResponse = await this.http.post<any>(`${serverURL}/addCar`, car).toPromise()
+    .then(res => res.Message, (err: HttpErrorResponse) => err.message);
+    return rentCarResponse;
+  }
 
   public async addCarType(rentCar: any) {
     const addCarTypeResponse = await this.http.post<any>(`${serverURL}/addCarType`, rentCar).toPromise()
@@ -68,6 +84,17 @@ export class CarsService {
   }
 
 
+  public async deleteCarStock(CarStock: any) {
+    const deleteCarRentResponse = await this.http.post<any>(`${serverURL}/deleteCarForRent`, CarStock).toPromise()
+    .then(res => res.Message, (err: HttpErrorResponse) => err.message);
+    return deleteCarRentResponse;
+  }
+
+  public async deleteCarOrder(carOrder: any) {
+    const deleteCarOrderResponse = await this.http.post<any>(`${serverURL}/deleteCarOrder`, carOrder).toPromise()
+    .then(res => res.Message, (err: HttpErrorResponse) => err.message);
+    return deleteCarOrderResponse;
+  }
 
 
 }

@@ -5,6 +5,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { Router } from '@angular/router';
 import sweetalert2 from 'sweetalert2';
 import { UsersService } from 'src/app/Services/users.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -40,6 +41,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     ])]
 })
 export class LoginComponent {
+  jwtHelper = new JwtHelperService();
   states = {};
   showFailedLogin = false;
   hide = true;
@@ -73,10 +75,8 @@ export class LoginComponent {
     this.showFailedLogin = false;
     const loginResponse = await this.users.login(email, password);
     if (!loginResponse.status) {
+      sessionStorage.setItem('token', loginResponse.Message);
       this.router.navigate(['/home']);
-      console.log('All good!');
-      // sessionStorage.setItem('token', loginResponse.token);
-      // sessionStorage.setItem('userName',loginResponse.usernameCN);
     } else {
       this.shakeMe('state1');
       this.showFailedLogin = true;

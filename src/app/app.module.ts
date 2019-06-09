@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // tslint:disable-next-line:max-line-length
-import {MatTabsModule, MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatPaginatorModule, MatInputModule, MatIconModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSelectModule, MatExpansionModule, MatTableModule, MatTooltipModule, MatDialogModule, MatMenuModule} from '@angular/material';
+import {MatTabsModule, MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatPaginatorModule, MatInputModule, MatIconModule, MatRadioModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSelectModule, MatExpansionModule, MatTableModule, MatTooltipModule, MatDialogModule, MatMenuModule, MatBadgeModule} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -24,6 +24,12 @@ import { MangeUsersComponent } from './Components/mange-users/mange-users.compon
 import { RentCarComponent } from './Components/rent-car/rent-car.component';
 import { ManageCarsTypesComponent } from './Components/manage-cars-types/manage-cars-types.component';
 import { AddCarTypeComponent } from './Components/add-car-type/add-car-type.component';
+import { ManageCarsStockComponent } from './Components/manage-cars-stock/manage-cars-stock.component';
+import { AddCarStockComponent } from './Components/add-car-stock/add-car-stock.component';
+import { NumberPipePipe } from './Pipes/toNumber';
+import { ManageOrdersComponent } from './Components/manage-orders/manage-orders.component';
+import { AddOrderComponent } from './Components/add-order/add-order.component';
+import { AuthInterceptor } from './Interceptor/httpconfig.interceptor';
 
 
 
@@ -37,11 +43,16 @@ import { AddCarTypeComponent } from './Components/add-car-type/add-car-type.comp
     PickCarComponent,
     FiltermultiPipe,
     CarNumberPipe,
+    NumberPipePipe,
     CarCardComponent,
     MangeUsersComponent,
     RentCarComponent,
     ManageCarsTypesComponent,
     AddCarTypeComponent,
+    ManageCarsStockComponent,
+    AddCarStockComponent,
+    ManageOrdersComponent,
+    AddOrderComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -53,6 +64,7 @@ import { AddCarTypeComponent } from './Components/add-car-type/add-car-type.comp
     MatSelectModule,
     FormsModule,
     MatInputModule,
+    MatBadgeModule,
     SatDatepickerModule,
     SatNativeDateModule,
     MatExpansionModule,
@@ -72,8 +84,13 @@ import { AddCarTypeComponent } from './Components/add-car-type/add-car-type.comp
     MatToolbarModule,
     AppRoutingModule
   ],
-  entryComponents: [TabsComponent],
-  providers: [UsersService, CarsService, BranchesService],
+  entryComponents: [TabsComponent, AddCarTypeComponent, AddCarStockComponent , AddOrderComponent],
+  providers: [ {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true,
+  },
+  UsersService, CarsService, BranchesService],
   bootstrap: [AppComponent, TabsComponent]
 })
 export class AppModule { }

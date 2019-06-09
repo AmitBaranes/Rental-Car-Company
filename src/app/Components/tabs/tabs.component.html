@@ -11,12 +11,15 @@
         <a  mat-button  routerLink="/Managment/Users">Users</a>
         <button mat-menu-item [matMenuTriggerFor]="Cars">Cars</button>
         <mat-menu #Cars="matMenu">
-          <a  mat-button  routerLink="/Managment/Cars Types">Types</a>
-          <button mat-menu-item>Cars Stock</button>
-          <button mat-menu-item>Orders</button>
+            <button mat-menu-item  routerLink="/Managment/Cars/Types">Types</button>
+            <button mat-menu-item  routerLink="/Managment/Cars/Stock">Stock</button>
+            <button mat-menu-item  routerLink="/Managment/Cars/Orders">Orders</button>
         </mat-menu>
       </mat-menu>
-
+            <!-- <mat-icon [matBadge]="getNumberOfOrders()" matBadgeColor="warn">shopping_cart</mat-icon> -->
+            <mat-icon class="icon">shopping_cart</mat-icon>
+            <!-- <span class="badge">{{getNumberOfOrders()}}</span> -->
+          <mat-icon  matBadgeColor="warn">account_circle</mat-icon>
     </mat-toolbar-row>
  </mat-toolbar>
 

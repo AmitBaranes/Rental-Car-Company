@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatDatepickerInputEvent, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import sweetalert2 from 'sweetalert2';
 import { CarsService } from 'src/app/Services/cars.service';
 import { AddCarTypeComponent } from '../add-car-type/add-car-type.component';
@@ -61,7 +61,6 @@ addCarType() {
 
 
 async deleteCarType(carType: ICarType) {
-
   sweetalert2.fire({
     title: `Are you sure you want to delete the selected car?`,
     text: `You won't be able to revert this!`,

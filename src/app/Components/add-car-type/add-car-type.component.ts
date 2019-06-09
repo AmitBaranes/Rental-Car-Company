@@ -50,6 +50,8 @@ export class AddCarTypeComponent implements OnInit {
   constructor(private carApi: CarsService, public dialog: MatDialog) { }
   form: ICarType = new ICarType();
   matcher = new MyErrorStateMatcher();
+  nextYear = new Date().getFullYear() + 1;
+  maxDate = new Date(this.nextYear, 0, 1);
   fg: FormGroup = new FormGroup({
     ManufacturerFormControl : new FormControl('', [
       Validators.required,

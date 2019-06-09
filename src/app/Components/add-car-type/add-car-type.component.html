@@ -42,9 +42,9 @@
                </mat-error>
               </mat-form-field>
               <mat-form-field>
-                  <input matInput [matDatepicker]="picker" placeholder="Choose year" value="form.Year" formControlName="DateFormControl">
+                  <input matInput [matDatepicker]="picker" placeholder="Choose year" value="form.Year" [max]="maxDate" formControlName="DateFormControl">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker (yearSelected)="addYearToForm($event);picker.close()" startView="multi-year"></mat-datepicker>
+                  <mat-datepicker #picker (yearSelected)="addYearToForm($event);picker.close()"   startView="multi-year"></mat-datepicker>
                 </mat-form-field>
                 <label >Gear:</label>
                 <mat-radio-group required  [(ngModel)]="form.Gear" [ngModelOptions]="{standalone: true}">

@@ -1,0 +1,49 @@
+<div id="wrapper">
+  <mat-card-content>
+    <form class="my-form">
+      <mat-form-field class="full-width">
+        <mat-label>Car Number</mat-label>
+        <mat-select name="CarNumber" [(ngModel)]="carOrder.CarNumber">
+          <mat-option *ngFor="let carO of allCarsType" [value]="carO.carNumber">
+            {{carO.manufacturer}} {{carO.model}} {{carO.year}} {{carO.gear}} - {{carO.carNumber}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Rent By</mat-label>
+        <mat-select name="UserID" [(ngModel)]="carOrder.UserID">
+          <mat-option *ngFor="let user of allUsers" [value]="user.UserID">
+            {{user.FirstName}} {{user.LastName}} - {{user.ID}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+          <mat-label>Start Time</mat-label>
+        <input matInput  [matDatepicker]="pickerStart"  [(ngModel)]="carOrder.StartTime">
+        <mat-datepicker-toggle matSuffix [for]="pickerStart"  name="start"></mat-datepicker-toggle>
+        <mat-datepicker [(ngModel)]="carOrder.StartTime" ngDefaultControl #pickerStart>
+        </mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+          <mat-label>End Time</mat-label>
+        <input matInput  name="end" [matDatepicker]="pickerEnd" [(ngModel)]="carOrder.EndTime">
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker  [(ngModel)]="carOrder.EndTime" ngDefaultControl #pickerEnd>
+        </mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+          <mat-label>Return Time</mat-label>
+        <input matInput name="return" [matDatepicker]="pickerReturn" [(ngModel)]="carOrder.ReturnTime">
+        <mat-datepicker-toggle matSuffix [for]="pickerReturn"></mat-datepicker-toggle>
+        <mat-datepicker [(ngModel)]="carOrder.ReturnTime" ngDefaultControl #pickerReturn>
+        </mat-datepicker>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="addOrder()">Add New Car</button>
+    <button mat-raised-button id="close-btn" color="warn" (click)="dialog.closeAll()">Close</button>
+  </mat-card-actions>
+</div>
+
+<!-- <input [hidden]="true"  id="btn-uploadfile" type="file" #fileInput ng2FileSelect [uploader]="uploader" (onFileSelected)="onFileSelected($event)" /> -->

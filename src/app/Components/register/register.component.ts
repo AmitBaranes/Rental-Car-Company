@@ -15,6 +15,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 
 export class IUser {
+  UserID: number;
   FirstName: string;
   LastName: string;
   ID: string;

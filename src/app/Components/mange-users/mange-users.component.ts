@@ -7,6 +7,7 @@ import { RegisterComponent } from '../register/register.component';
 
 
 interface IUser {
+  UserID: number;
   FirstName: string;
   LastName: string;
   ID: string;
