@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BaranesCarRentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="String" MaxLength="9" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FullName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+    <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="RoleType" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="RentCars" Relationship="BaranesCarRentModel.FK_RentCars_RentCars" FromRole="User" ToRole="RentCar" />
+  </EntityType>
+  <EntityContainer Name="BaranesCarRentEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="Branches" EntityType="BaranesCarRentModel.Branch" />
+    <EntitySet Name="CarsForRents" EntityType="BaranesCarRentModel.CarsForRent" />
+    <EntitySet Name="CarTypes" EntityType="BaranesCarRentModel.CarType" />
+    <EntitySet Name="RentCars" EntityType="BaranesCarRentModel.RentCar" />
+    <AssociationSet Name="FK_CarsForRent_CarType" Association="BaranesCarRentModel.FK_CarsForRent_CarType">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="CarsForRent" EntitySet="CarsForRents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CarsForRent_CarType1" Association="BaranesCarRentModel.FK_CarsForRent_CarType1">
+      <End Role="CarType" EntitySet="CarTypes" />
+      <End Role="CarsForRent" EntitySet="CarsForRents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentCars_RentCars" Association="BaranesCarRentModel.FK_RentCars_RentCars">
+      <End Role="User" EntitySet="Users" />
+      <End Role="RentCar" EntitySet="RentCars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentCars_CarsForRent" Association="BaranesCarRentModel.FK_RentCars_CarsForRent">
+      <End Role="CarsForRent" EntitySet="CarsForRents" />
+      <End Role="RentCar" EntitySet="RentCars" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Branch">
+    <Key>
+      <PropertyRef Name="BranchID" />
+    </Key>
+    <Property Name="BranchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Location" Type="Decimal" Nullable="false" Precision="9" Scale="6" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="CarsForRent">
+    <Key>
+      <PropertyRef Name="CarID" />
+      <PropertyRef Name="CarNumber" />
+    </Key>
+    <Property Name="CarID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeID" Type="Int32" Nullable="false" />
+    <Property Name="Mileage" Type="Int64" Nullable="false" />
+    <Property Name="Proper" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Available" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Number" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="BranchID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Branch" Relationship="BaranesCarRentModel.FK_CarsForRent_CarType" FromRole="CarsForRent" ToRole="Branch" />
+    <NavigationProperty Name="CarType" Relationship="BaranesCarRentModel.FK_CarsForRent_CarType1" FromRole="CarsForRent" ToRole="CarType" />
+    <Property Name="CarNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="RentCar" Relationship="BaranesCarRentModel.FK_RentCars_CarsForRent" FromRole="CarsForRent" ToRole="RentCar" />
+  </EntityType>
+  <EntityType Name="CarType">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Manufacturer" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Model" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CostPerDay" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="CostPerDayDelay" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Year" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="Gear" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+  </EntityType>
+  <EntityType Name="RentCar">
+    <Key>
+      <PropertyRef Name="CarNumber" />
+    </Key>
+    <Property Name="CarNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ReturnTime" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="User" Relationship="BaranesCarRentModel.FK_RentCars_RentCars" FromRole="RentCar" ToRole="User" />
+    <NavigationProperty Name="CarsForRent" Relationship="BaranesCarRentModel.FK_RentCars_CarsForRent" FromRole="RentCar" ToRole="CarsForRent" />
+  </EntityType>
+  <Association Name="FK_CarsForRent_CarType">
+    <End Type="BaranesCarRentModel.Branch" Role="Branch" Multiplicity="1" />
+    <End Type="BaranesCarRentModel.CarsForRent" Role="CarsForRent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="BranchID" />
+      </Principal>
+      <Dependent Role="CarsForRent">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CarsForRent_CarType1">
+    <End Type="BaranesCarRentModel.CarType" Role="CarType" Multiplicity="1" />
+    <End Type="BaranesCarRentModel.CarsForRent" Role="CarsForRent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarType">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="CarsForRent">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentCars_RentCars">
+    <End Type="BaranesCarRentModel.User" Role="User" Multiplicity="1" />
+    <End Type="BaranesCarRentModel.RentCar" Role="RentCar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="RentCar">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentCars_CarsForRent">
+    <End Type="BaranesCarRentModel.CarsForRent" Role="CarsForRent" Multiplicity="1" />
+    <End Type="BaranesCarRentModel.RentCar" Role="RentCar" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="CarsForRent">
+        <PropertyRef Name="CarNumber" />
+      </Principal>
+      <Dependent Role="RentCar">
+        <PropertyRef Name="CarNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

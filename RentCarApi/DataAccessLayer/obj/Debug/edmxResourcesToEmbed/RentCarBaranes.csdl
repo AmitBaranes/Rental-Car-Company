@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BaranesCarRentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Branch">
+    <Key>
+      <PropertyRef Name="BranchID" />
+    </Key>
+    <Property Name="BranchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Location" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="CarsForRent">
+    <Key>
+      <PropertyRef Name="CarNumber" />
+    </Key>
+    <Property Name="CarNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TypeID" Type="Int32" Nullable="false" />
+    <Property Name="Mileage" Type="Int64" Nullable="false" />
+    <Property Name="Proper" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Available" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="BranchID" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CarType">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Manufacturer" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CostPerDay" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="CostPerDayDelay" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Year" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Gear" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="RentCar">
+    <Key>
+      <PropertyRef Name="CarNumber" />
+    </Key>
+    <Property Name="CarNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ReturnTime" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID" Type="String" MaxLength="9" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+    <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="320" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="44" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+    <Property Name="RoleType" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_RentCars_CarsForRent">
+    <End Role="CarsForRent" Type="Self.CarsForRent" Multiplicity="1" />
+    <End Role="RentCars" Type="Self.RentCar" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="CarsForRent">
+        <PropertyRef Name="CarNumber" />
+      </Principal>
+      <Dependent Role="RentCars">
+        <PropertyRef Name="CarNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RentCars_RentCars">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="RentCars" Type="Self.RentCar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="RentCars">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CarRentEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Branches" EntityType="Self.Branch" />
+    <EntitySet Name="CarsForRents" EntityType="Self.CarsForRent" />
+    <EntitySet Name="CarTypes" EntityType="Self.CarType" />
+    <EntitySet Name="RentCars" EntityType="Self.RentCar" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_RentCars_CarsForRent" Association="Self.FK_RentCars_CarsForRent">
+      <End Role="CarsForRent" EntitySet="CarsForRents" />
+      <End Role="RentCars" EntitySet="RentCars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RentCars_RentCars" Association="Self.FK_RentCars_RentCars">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="RentCars" EntitySet="RentCars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CarsForRent_CarType" Association="BaranesCarRentModel.FK_CarsForRent_CarType">
+      <End Role="CarType" EntitySet="CarTypes" />
+      <End Role="CarsForRent" EntitySet="CarsForRents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CarType_CarType" Association="BaranesCarRentModel.FK_CarType_CarType">
+      <End EntitySet="CarTypes" Role="CarType" />
+      <End EntitySet="CarTypes" Role="CarType1" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CarsForRent_Branch" Association="BaranesCarRentModel.FK_CarsForRent_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="CarsForRent" EntitySet="CarsForRents" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_CarsForRent_CarType">
+    <End Type="BaranesCarRentModel.CarType" Role="CarType" Multiplicity="1" />
+    <End Type="BaranesCarRentModel.CarsForRent" Role="CarsForRent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarType">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="CarsForRent">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CarType_CarType">
+    <End Type="BaranesCarRentModel.CarType" Multiplicity="1" Role="CarType" />
+    <End Type="BaranesCarRentModel.CarType" Multiplicity="0..1" Role="CarType1" />
+    <ReferentialConstraint>
+      <Principal Role="CarType">
+        <PropertyRef Name="TypeID" />
+      </Principal>
+      <Dependent Role="CarType1">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CarsForRent_Branch">
+    <End Type="BaranesCarRentModel.Branch" Role="Branch" Multiplicity="1" />
+    <End Type="BaranesCarRentModel.CarsForRent" Role="CarsForRent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="BranchID" />
+      </Principal>
+      <Dependent Role="CarsForRent">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
