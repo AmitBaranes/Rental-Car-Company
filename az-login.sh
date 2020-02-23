@@ -1,0 +1,1 @@
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash && az login --service-principal --username 6772ca74-5b1b-4aa4-af93-2c4ccaa654bd --password w2.f.OYU33.Os_6p4Ig9Df1W04iS/L-y --tenant a74f83bf-100c-4fad-96a1-972cf505cfc9
